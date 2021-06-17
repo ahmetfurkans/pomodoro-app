@@ -18,6 +18,7 @@ h1 {
   font-size: 10rem;
   line-height: 12rem;
   letter-spacing: -1px;
+  text-indent: -1px;
 }
 h2 {
   font-size: 28px;
@@ -28,12 +29,14 @@ h3 {
   line-height: 1.6rem;
   letter-spacing: 1.5rem;
   text-transform: uppercase;
+  text-indent: 1.5rem;
 }
 
 h4 {
   font-size: 13px;
   line-height: 13px;
   letter-spacing: 5px;
+  text-indent: 5px;
   text-transform: uppercase;
 }
 
@@ -142,6 +145,30 @@ body {
   height: 36.6rem;
   border-radius: 50%;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App__timer__content {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App__time__button {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  h3 {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .svg {
@@ -167,6 +194,26 @@ body {
 
   .App__option {
     width: 10.6rem;
+  }
+  .App__timer {
+    width: 30rem;
+    height: 30rem;
+    box-shadow: -1rem -1rem 2rem #272c5a, 1rem 1rem 2rem #121530;
+  }
+  .App__timer__wrapper {
+    width: 26.7rem;
+    height: 26.7rem;
+    h1 {
+      font-size: 8rem;
+    }
+  }
+  .svg {
+    cy: 165;
+    cx: 165;
+    circle {
+      r: 124;
+      stroke-width: 8px;
+    }
   }
 }
 

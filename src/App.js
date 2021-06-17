@@ -5,7 +5,7 @@ function App() {
   const initialState = {
     time: {
       pomodoro: 45,
-      shortBreak: 5,
+      shortBreak: 0.1,
       longBreak: 15,
     },
     font: 'primary-font',
@@ -76,6 +76,12 @@ function App() {
     setTimerOn(true);
   };
 
+  const returnTime = () => {
+    const minute = time / 60 < 10 ? '0' + String(Math.floor(time / 60)) : String(Math.floor(time / 60));
+    const second = time % 60 < 10 ? '0' + String(time % 60) : String(time % 60);
+    return minute + ':' + second;
+  };
+
   const svgCircleLengthHandler = () => {
     if (activeButton === 'pomodoro') {
       return (circleLength * (settings.time.pomodoro * 60 - time)) / (settings.time.pomodoro * 60);
@@ -105,6 +111,10 @@ function App() {
           <svg className="svg" height="360" width="360">
             <circle className={settings.color} strokeDasharray={window.innerWidth < 600 ? 779.11 : 1037} strokeDashoffset={svgCircleLengthHandler()} fill="transparent" strokeLinecap="round" />
           </svg>
+          <div className="App__timer__content">
+            <h1>{returnTime()}</h1>
+          </div>
+          <div className="App__time__button">{time === 0 ? <h3 onClick={onRestartTime}>RESTART</h3> : <h3 onClick={() => setTimerOn((prev) => !prev)}>{timerOn ? 'PAUSE' : 'PLAY'}</h3>}</div>
         </div>
       </div>
       <div className="App__settings">
