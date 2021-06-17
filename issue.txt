@@ -1,0 +1,142 @@
+     <div className="App__timer">
+        <div className="App__timer__wrapper">
+          <div className="App__time">
+            <svg className="svg" height="360" width="360">
+              <circle className={settings.color} strokeDasharray={window.innerWidth < 600 ? 779.11 : 1037} strokeDashoffset={svgCircleLengthHandler()} fill="transparent" strokeLinecap="round" />
+            </svg>
+            <div className="App__h1__wrapper">
+              <h1>{time / 60 < 10 ? '0' + Math.floor(time / 60) : String(Math.floor(time / 60))}</h1>
+              <h1>:</h1>
+              <h1>{time % 60 < 10 ? '0' + String(time % 60) : time % 60}</h1>
+            </div>
+            <div className="App__time__button">{time === 0 ? <h3 onClick={onRestartTime}>RESTART</h3> : <h3 onClick={() => setTimerOn((prev) => !prev)}>{timerOn ? 'PAUSE' : 'PLAY'}</h3>}</div>
+          </div>
+        </div>
+      </div>
+
+
+      -------------------------------------------
+      .App__timer {
+  background: linear-gradient(315deg, #2e325a 0%, #0e112a 100%);
+  box-shadow: -5rem -5rem 10rem #272c5a, 5rem 5rem 10rem #121530;
+  width: 41rem;
+  height: 41rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.App__timer__wrapper {
+  background: #161932;
+  width: 36.6rem;
+  height: 36.6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.App__time {
+  display: flex;
+  align-items: center;
+  h1 {
+    display: flex;
+    text-align: center;
+  }
+}
+
+.App__settings,
+.App__time__button {
+  cursor: pointer;
+}
+
+.App__time__button {
+  position: absolute;
+  top: 27rem;
+  left: 50%;
+  transform: translateX(-50%);
+  h3 {
+    padding-left: 1.8rem;
+    display: flex;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    r: 165;
+    cy: 180;
+    cx: 180;
+    stroke-width: 11px;
+  }
+}
+
+.App__h1__wrapper {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 28rem;
+  h1 {
+    &:first-child {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+    &:nth-child(2) {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      padding: 0 2rem;
+      transform: translate(-50%, -50%);
+    }
+    &:last-child {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+---------------------------
+ .App__timer {
+    width: 30rem;
+    height: 30rem;
+  }
+
+  .App__timer__wrapper {
+    width: 26.7rem;
+    height: 26.7rem;
+  }
+  h1 {
+    font-size: 8rem;
+  }
+  .svg {
+    cy: 165;
+    cx: 165;
+    circle {
+      r: 124;
+      stroke-width: 8px;
+    }
+  }
+  .App__time__button {
+    top: 20rem;
+  }
+  .App__timer {
+    box-shadow: -3rem -3rem 6rem #272c5a, 3rem 3rem 6rem #121530;
+  }
+  .App__h1__wrapper {
+    width: 22rem;
+  }

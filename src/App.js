@@ -30,7 +30,6 @@ function App() {
   }, [showModal]);
 
   useEffect(() => {
-  
     if (window.innerWidth < 600) {
       setCircleLength(779.11);
     } else {
@@ -103,17 +102,9 @@ function App() {
       </div>
       <div className="App__timer">
         <div className="App__timer__wrapper">
-          <div className="App__time">
-            <svg className="svg" height="360" width="360">
-              <circle className={settings.color} strokeDasharray={window.innerWidth < 600 ? 779.11 : 1037} strokeDashoffset={svgCircleLengthHandler()} fill="transparent" strokeLinecap="round" />
-            </svg>
-            <div className="App__h1__wrapper">
-              <h1>{time / 60 < 10 ? '0' + Math.floor(time / 60) : String(Math.floor(time / 60))}</h1>
-              <h1>:</h1>
-              <h1>{time % 60 < 10 ? '0' + String(time % 60) : time % 60}</h1>
-            </div>
-            <div className="App__time__button">{time === 0 ? <h3 onClick={onRestartTime}>RESTART</h3> : <h3 onClick={() => setTimerOn((prev) => !prev)}>{timerOn ? 'PAUSE' : 'PLAY'}</h3>}</div>
-          </div>
+          <svg className="svg" height="360" width="360">
+            <circle className={settings.color} strokeDasharray={window.innerWidth < 600 ? 779.11 : 1037} strokeDashoffset={svgCircleLengthHandler()} fill="transparent" strokeLinecap="round" />
+          </svg>
         </div>
       </div>
       <div className="App__settings">
