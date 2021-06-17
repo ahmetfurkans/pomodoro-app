@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700&family=Roboto+Slab:wght@700&family=Space+Mono&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+html {
+  font-size: 10px;
+}
+
+h1 {
+  font-size: 10rem;
+  line-height: 12rem;
+  letter-spacing: -1px;
+}
+h2 {
+  font-size: 28px;
+  line-height: 34px;
+}
+h3 {
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  letter-spacing: 1.5rem;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+.body-1 {
+  font-size: 14px;
+  line-height: 18px;
+  mix-blend-mode: normal;
+  opacity: 0.6;
+}
+
+.body-2 {
+  font-size: 12px;
+  line-height: 14px;
+  mix-blend-mode: normal;
+  opacity: 0.4;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  background-color: #1e213f;
+  font-style: normal;
+  font-weight: bold;
+  color: #d7e0ff;
+}
+
+.primary-font {
+  font-family: 'Kumbh Sans', sans-serif;
+}
+.secondary-font {
+  font-family: 'Roboto Slab', serif;
+}
+.light-font {
+  font-family: 'Space Mono', monospace;
+}
+
+.primary-color {
+  background-color: #f87070 !important;
+  stroke: #f87070;
+}
+
+.secondary-color {
+  background: #70f3f8 !important;
+  stroke: #70f3f8;
+}
+
+.purple-color {
+  background: #d881f8 !important;
+  stroke: #d881f8;
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
+  padding-top: 4.8rem;
+  padding-bottom: 5.6rem;
+}
+
+.App__options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 37.3rem;
+  height: 6.3rem;
+  background: #161932;
+  border-radius: 31.5px;
+  padding: 0 1rem;
+}
+
+.App__option {
+  width: 12rem;
+  height: 4.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.App__option-active {
+  border-radius: 2.65rem;
+  opacity: 1;
+  color: #1e213f;
+}
+
+.App__timer {
+  background: linear-gradient(315deg, #2e325a 0%, #0e112a 100%);
+  box-shadow: -5rem -5rem 10rem #272c5a, 5rem 5rem 10rem #121530;
+  width: 41rem;
+  height: 41rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.App__timer__wrapper {
+  background: #161932;
+  width: 36.6rem;
+  height: 36.6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.App__time {
+  display: flex;
+  align-items: center;
+  h1 {
+    display: flex;
+    text-align: center;
+  }
+}
+
+.App__settings,
+.App__time__button {
+  cursor: pointer;
+}
+
+.App__time__button {
+  position: absolute;
+  top: 27rem;
+  left: 50%;
+  transform: translateX(-50%);
+  h3 {
+    padding-left: 1.8rem;
+    display: flex;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    r: 165;
+    cy: 180;
+    cx: 180;
+    stroke-width: 11px;
+  }
+}
+
+.App__h1__wrapper {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 28rem;
+  h1 {
+    &:first-child {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+    &:nth-child(2) {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &:last-child {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .App__options {
+    width: 32.7rem;
+  }
+
+  .App__option {
+    width: 10.6rem;
+  }
+  .App__timer {
+    width: 30rem;
+    height: 30rem;
+  }
+
+  .App__timer__wrapper {
+    width: 26.7rem;
+    height: 26.7rem;
+  }
+  h1 {
+    font-size: 8rem;
+  }
+  .svg {
+    cy: 165;
+    cx: 165;
+    circle {
+      r: 124;
+      stroke-width: 8px;
+    }
+  }
+  .App__time__button {
+    top: 20rem;
+  }
+  .App__timer {
+    box-shadow: -3rem -3rem 6rem #272c5a, 3rem 3rem 6rem #121530;
+  }
+  .App__h1__wrapper {
+    width: 22rem;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .App__options {
+    width: 31rem;
+  }
+}
