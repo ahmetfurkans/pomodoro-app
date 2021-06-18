@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import TimeSelect from './components/TimeSelect';
+import FontOption from './components/FontOption';
+import ColorOption from './components/ColorOption';
 import './modal.scss';
 import './index.scss';
 
 function Modal({ showModal, setShowModal, setSettings }) {
-  const pomodoroOptions = [15, 20, 25, 30, 35, 45, 50, 55, 60];
-  const breakOptions = [2, 3, 4, 5, 10, 15, 20, 25, 30];
   const initialState = {
     time: {
       pomodoro: 45,
@@ -14,26 +15,25 @@ function Modal({ showModal, setShowModal, setSettings }) {
     font: 'primary-font',
     color: 'primary-color',
   };
-  const [settings, setSetting] = useState(initialState);
+  const [modalSettings, setModalSettings] = useState(initialState);
+  const pomodoroOptions = [15, 20, 25, 30, 35, 45, 50, 55, 60];
+  const breakOptions = [2, 3, 4, 5, 10, 15, 20, 25, 30];
+
   const onTimeChangeHandler = (e) => {
     const name = e.target.name;
     const value = Number(e.target.value);
-    if (name === 'longBreak') {
-      const newTime = { ...settings.time, longBreak: value };
-      setSetting({ ...settings, time: newTime });
-    } else if (name === 'shortBreak') {
-      const newTime = { ...settings.time, shortBreak: value };
-      setSetting({ ...settings, time: newTime });
-    } else if (name === 'pomodoro') {
-      const newTime = { ...settings.time, pomodoro: value };
-      setSetting({ ...settings, time: newTime });
-    }
+    const newTime = { ...modalSettings.time, [name]: value };
+    setModalSettings({ ...modalSettings, time: newTime });
   };
 
-  const applySettings = (e) => {
+  const applySettings = () => {
     setShowModal();
-    console.log(settings);
-    setSettings(settings);
+    const newTime = {
+      pomodoro: modalSettings.time.pomodoro * 60,
+      shortBreak: modalSettings.time.shortBreak * 60,
+      longBreak: modalSettings.time.longBreak * 60,
+    };
+    setSettings({ ...modalSettings, time: newTime });
   };
   return (
     <>
@@ -47,82 +47,27 @@ function Modal({ showModal, setShowModal, setSettings }) {
             <div className="modal__options-time">
               <h4>TIME (MINUTES)</h4>
               <div className="modal__options-time__wrapper">
-                <div className="modal__option-time">
-                  <label htmlFor="pomodoro" className="body-2">
-                    pomodoro
-                  </label>
-                  <select value={settings.time.pomodoro} onChange={(e) => onTimeChangeHandler(e)} name="pomodoro" id="pomodoro">
-                    {pomodoroOptions.map((option) => (
-                      <option value={option} key={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="modal__option-time">
-                  <label htmlFor="shortBreak" className="body-2">
-                    short break
-                  </label>
-                  <select value={settings.time.shortBreak} onChange={(e) => onTimeChangeHandler(e)} name="shortBreak" id="shortBreak">
-                    {breakOptions.map((option) => (
-                      <option value={option} key={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="modal__option-time">
-                  <label htmlFor="longBreak" className="body-2">
-                    long break
-                  </label>
-                  <select value={settings.time.longBreak} onChange={(e) => onTimeChangeHandler(e)} name="longBreak" id="longBreak">
-                    {breakOptions.map((option) => (
-                      <option value={option} key={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <TimeSelect name="pomodoro" value={modalSettings.time.pomodoro} option={pomodoroOptions} onTimeChangeHandler={onTimeChangeHandler} />
+                <TimeSelect name="shortBreak" value={modalSettings.time.shortBreak} option={breakOptions} onTimeChangeHandler={onTimeChangeHandler} />
+                <TimeSelect name="longBreak" value={modalSettings.time.longBreak} option={breakOptions} onTimeChangeHandler={onTimeChangeHandler} />
               </div>
             </div>
             <div className="modal__options modal__options__bb">
               <h4>Font</h4>
-              <div className="modal__options-font__wrapper ">
-                <div
-                  onClick={() => setSetting({ ...settings, font: 'primary-font' })}
-                  className={`primary-font modal__option-font primary-font ${settings.font === 'primary-font' ? 'modal__option-font-active' : null}`}
-                >
-                  Aa
-                </div>
-                <div
-                  onClick={() => setSetting({ ...settings, font: 'secondary-font' })}
-                  className={`primary-font modal__option-font secondary-font ${settings.font === 'secondary-font' ? 'modal__option-font-active' : null}`}
-                >
-                  Aa
-                </div>
-                <div
-                  onClick={() => setSetting({ ...settings, font: 'light-font' })}
-                  className={`primary-font modal__option-font light-font ${settings.font === 'light-font' ? 'modal__option-font-active' : null}`}
-                >
-                  Aa
-                </div>
+              <div className="modal__options__wrapper ">
+                <FontOption setModalSettings={setModalSettings} fontClassName="primary-font" modalSettings={modalSettings} />
+                <FontOption setModalSettings={setModalSettings} fontClassName="secondary-font" modalSettings={modalSettings} />
+                <FontOption setModalSettings={setModalSettings} fontClassName="light-font" modalSettings={modalSettings} />
               </div>
             </div>
             <div className="modal__options">
               <h4>COLOR</h4>
-              <div className="modal__options-font__wrapper">
-                <div onClick={() => setSetting({ ...settings, color: 'primary-color' })} className="modal__option-font primary-color">
-                  {settings.color === 'primary-color' && <img src="./images/tick.svg" alt="tick" />}
-                </div>
-                <div onClick={() => setSetting({ ...settings, color: 'secondary-color' })} className="modal__option-font secondary-color">
-                  {settings.color === 'secondary-color' && <img src="./images/tick.svg" alt="tick" />}
-                </div>
-                <div onClick={() => setSetting({ ...settings, color: 'purple-color' })} className="modal__option-font purple-color">
-                  {settings.color === 'purple-color' && <img src="./images/tick.svg" alt="tick" />}
-                </div>
+              <div className="modal__options__wrapper">
+                <ColorOption setModalSettings={setModalSettings} colorClassName="primary-color" modalSettings={modalSettings} />
+                <ColorOption setModalSettings={setModalSettings} colorClassName="secondary-color" modalSettings={modalSettings} />
+                <ColorOption setModalSettings={setModalSettings} colorClassName="purple-color" modalSettings={modalSettings} />
               </div>
             </div>
-
             <button onClick={applySettings} className="modal__button-submit primary-font" type="submit">
               Apply
             </button>

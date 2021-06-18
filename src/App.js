@@ -4,37 +4,25 @@ import Modal from './Modal';
 function App() {
   const initialState = {
     time: {
-      pomodoro: 45,
-      shortBreak: 0.1,
-      longBreak: 15,
+      pomodoro: 45 * 60,
+      shortBreak: 5 * 60,
+      longBreak: 15 * 60,
     },
     font: 'primary-font',
     color: 'primary-color',
   };
-
   const [settings, setSettings] = useState(initialState);
-  const [time, setTime] = useState(settings.time.pomodoro * 60);
+  const [time, setTime] = useState(settings.time.pomodoro);
   const [timerOn, setTimerOn] = useState(false);
   const [activeButton, setActiveButton] = useState('pomodoro');
   const [showModal, setShowModal] = useState(false);
   const [circleLength, setCircleLength] = useState(1037);
 
   useEffect(() => {
-    if (activeButton === 'pomodoro') {
-      setTime(settings.time.pomodoro * 60);
-    } else if (activeButton === 'long break') {
-      setTime(settings.time.longBreak * 60);
-    } else if (activeButton === 'short break') {
-      setTime(settings.time.shortBreak * 60);
-    }
+    setTime(settings.time[activeButton]);
   }, [showModal]);
 
   useEffect(() => {
-    if (window.innerWidth < 600) {
-      setCircleLength(779.11);
-    } else {
-      setCircleLength(1037);
-    }
     let interval = null;
     if (time === 0) {
       setTimerOn(false);
@@ -48,68 +36,57 @@ function App() {
     }
     return () => clearInterval(interval);
   });
+  useEffect(() => {
+    const handler = () =>
+      setCircleLength((prev) => {
+        if (prev === 1037) {
+          return 779.11;
+        } else {
+          return 1037;
+        }
+      });
+    window.matchMedia('(min-width: 600px)').addListener(handler);
+  });
 
   const onClickOptionChange = (e) => {
-    const optionType = e.target.innerHTML;
+    const optionType = e.target.id;
     setActiveButton(optionType);
-    if (optionType === 'pomodoro') {
-      setTime(settings.time.pomodoro * 60);
-    } else if (optionType === 'long break') {
-      setTime(settings.time.longBreak * 60);
-    } else if (optionType === 'short break') {
-      setTime(settings.time.shortBreak * 60);
-    }
+    setTime(settings.time[optionType]);
   };
-
-  const onClickModalHandler = () => {
-    setShowModal((prev) => !prev);
-  };
-
   const onRestartTime = () => {
-    if (activeButton === 'pomodoro') {
-      setTime(settings.time.pomodoro * 60);
-    } else if (activeButton === 'long break') {
-      setTime(settings.time.longBreak * 60);
-    } else if (activeButton === 'short break') {
-      setTime(settings.time.shortBreak * 60);
-    }
+    setTime(activeButton);
     setTimerOn(true);
   };
-
   const returnTime = () => {
     const minute = time / 60 < 10 ? '0' + String(Math.floor(time / 60)) : String(Math.floor(time / 60));
     const second = time % 60 < 10 ? '0' + String(time % 60) : String(time % 60);
     return minute + ':' + second;
   };
-
   const svgCircleLengthHandler = () => {
-    if (activeButton === 'pomodoro') {
-      return (circleLength * (settings.time.pomodoro * 60 - time)) / (settings.time.pomodoro * 60);
-    } else if (activeButton === 'long break') {
-      return (circleLength * (settings.time.longBreak * 60 - time)) / (settings.time.longBreak * 60);
-    } else if (activeButton === 'short break') {
-      return (circleLength * (settings.time.shortBreak * 60 - time)) / (settings.time.shortBreak * 60);
-    }
+    return (circleLength * (settings.time[activeButton] - time)) / settings.time[activeButton];
+  };
+  const onClickModalHandler = () => {
+    setShowModal((prev) => !prev);
   };
 
   return (
     <div className={`App ${settings.font}`}>
       <h2 className="App__h2">pomodoro</h2>
       <div className="App__options">
-        <p onClick={(e) => onClickOptionChange(e)} className={`${activeButton === 'pomodoro' ? `App__option App__option-active body-1 ${settings.color}` : 'App__option body-1'}`}>
+        <p id="pomodoro" onClick={(e) => onClickOptionChange(e)} className={`${activeButton === 'pomodoro' ? `App__option App__option-active body-1 ${settings.color}` : 'App__option body-1'}`}>
           pomodoro
         </p>
-        <p onClick={(e) => onClickOptionChange(e)} className={`${activeButton === 'short break' ? `App__option App__option-active body-1 ${settings.color}` : 'App__option body-1'}`}>
+        <p id="shortBreak" onClick={(e) => onClickOptionChange(e)} className={`${activeButton === 'shortBreak' ? `App__option App__option-active body-1 ${settings.color}` : 'App__option body-1'}`}>
           short break
         </p>
-        <p onClick={(e) => onClickOptionChange(e)} className={`${activeButton === 'long break' ? `App__option App__option-active body-1 ${settings.color}` : 'App__option body-1'}`}>
+        <p id="longBreak" onClick={(e) => onClickOptionChange(e)} className={`${activeButton === 'longBreak' ? `App__option App__option-active body-1 ${settings.color}` : 'App__option body-1'}`}>
           long break
         </p>
       </div>
       <div className="App__timer">
         <div className="App__timer__wrapper">
-          <svg className="svg" height="360" width="360">
-            <circle className={settings.color} strokeDasharray={window.innerWidth < 600 ? 779.11 : 1037} strokeDashoffset={svgCircleLengthHandler()} fill="transparent" strokeLinecap="round" />
+          <svg className="svg">
+            <circle className={settings.color} strokeDashoffset={svgCircleLengthHandler()} fill="transparent" strokeLinecap="round" />
           </svg>
           <div className="App__timer__content">
             <h1>{returnTime()}</h1>
